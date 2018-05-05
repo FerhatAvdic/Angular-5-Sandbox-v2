@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable'
 import { Post } from '../models/Post';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'});
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 }
 @Injectable()
 export class PostService {
@@ -14,9 +14,15 @@ export class PostService {
   constructor(private http: HttpClient) { }
 
   getPosts(): Observable<Post[]>{
-    return this.http.get<Post[]>(this.postsUrl)
+    return this.http.get<Post[]>(this.postsUrl);
   }
   savePost(post: Post): Observable<Post>{
-    return this.http.post<Post>(this.postsUrl, post, httpOptions)
+    return this.http.post<Post>(this.postsUrl, post, httpOptions);
+  }
+  updatePost(post: Post): Observable<Post>{
+    return this.http.put<Post>(`${this.postsUrl}/${post.id}`, post, httpOptions);
+  }
+  removePost(postId: Number):Observable<Post>{
+    return this.http.delete<Post>(`${this.postsUrl}/${postId}`, httpOptions);
   }
 }
